@@ -29,10 +29,14 @@ const initialState: UserState = {
   status: "idle",
   error: "",
 };
+interface ResetPasswordPayload {
+  userId: string;
+  newPassword: string;
+}
 
 // for login functionality
-export const loginUser = createAsyncThunk('user/loginUser', async ({ email, password }: LoginPayload) => {
-    const response = await fetch('http://localhost:3001/users');
+export const loginUser = createAsyncThunk('user/loginUser', async () => {
+    const response = await fetch('http://localhost:3001/user');
     const users: User[] = await response.json();
     return users;
 });
@@ -51,9 +55,27 @@ export const userPostData = createAsyncThunk("userdata", async (requestData: Use
     return await response.json();
   } catch (error: any) {
     console.log(error.message, "data is not posted");
-    throw error; // Re-throw the error to be caught in the rejected state
+   
   }
 });
+
+export const resetPassword = createAsyncThunk('user/resetPassword', async ({ userId, newPassword }: ResetPasswordPayload) => {
+  try {
+    const response = await fetch(`http://localhost:3001/user/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password: newPassword }),
+    });
+
+    return await response.json();
+   
+  } catch (error) {
+   console.log(error, "error")
+  }
+});
+
 
 export const userSlice = createSlice({
   name: "user",
@@ -80,6 +102,19 @@ export const userSlice = createSlice({
       })
     builder.addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
         state.status = 'failed';
+      });
+      builder.addCase(resetPassword.pending, (state) => {
+        state.status = 'loading';
+      });
+  
+      builder.addCase(resetPassword.fulfilled, (state, action:PayloadAction<any>) => {
+        state.status = 'succeeded';
+        state.data = action.payload;
+      });
+  
+      builder.addCase(resetPassword.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   
   },

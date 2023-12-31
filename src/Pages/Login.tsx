@@ -5,8 +5,10 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import {useAppSelector, useAppDispatch} from '../store/hooks'
 import { loginUser } from "../store/userSlice";
+import { useSelector } from "react-redux";
 
 import { RootState } from "../store/store";
+import { log } from "console";
 
 interface formBannerProps {
   image: string;
@@ -15,28 +17,24 @@ interface formBannerProps {
 const Login: React.FC<formBannerProps> = (props) => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const loginUser = useAppSelector((state)=> state.user.data);
-    console.log(loginUser, "login data");
+    const user = useAppSelector((state:RootState)=> state.user.data);
+    const loggedInUser = user.find((user)=> user.email === email && user.password === password)
+    console.log(loggedInUser, "logged in use");
+    
     
     const dispatch = useAppDispatch();
   
     const handleLogin = async (e: React.FormEvent) => {
       e.preventDefault();
     
-    
+      await dispatch(loginUser())
+      if (loggedInUser) {
+        sessionStorage.setItem("userEmail", email);
+        sessionStorage.setItem("userPassword", password);
+        window.location.href = "/home";
+      }
     };
    
-    // useEffect(() => {
-    //   if (loggedIn) {
-    //     sessionStorage.setItem("item_key", email);
-    //     sessionStorage.setItem("item_key", password);
-
-
-    //     window.location.href = "/signUp";
-    //   }
-    // }, [loggedIn,email, password]);
-
-
   return (
     <>
       <div className="container">

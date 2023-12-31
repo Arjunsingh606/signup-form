@@ -1,0 +1,76 @@
+{
+  "user": [
+    {
+      "firstName": "Rahul ",
+      "lastName": "Savaliya",
+      "email": "rahul@gmail.com",
+      "password": "aaaaa",
+      "confirmPass": "aaaa",
+      "id": 39
+    },
+    {
+      "firstName": "Arjun ",
+      "lastName": "Singh",
+      "email": "singharjun.u@gmail.com",
+      "password": "Arjun@123",
+      "confirmPass": "asdesd",
+      "id": 40
+    },
+    {
+      "firstName": "Pace",
+      "lastName": "Burks",
+      "email": "hefycute@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPass": "Pa$$w0rd!",
+      "id": 41
+    },
+    {
+      "firstName": "Arjun",
+      "lastName": "Singh",
+      "email": "player@gmail.com",
+      "password": "ssss",
+      "confirmPass": "sdfdsfds",
+      "id": 49
+    },
+    {
+      "firstName": "apple",
+      "lastName": "bannana",
+      "email": "xowyxy@mailinator.com",
+      "password": "aaaaa",
+      "confirmPass": "aswdwedew",
+      "id": 50
+    },
+    {
+      "firstName": "Bird",
+      "lastName": "Navarro",
+      "email": "toxafewyn@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPass": "Pa$$w0rd!",
+      "id": 51
+    },
+    {
+      "firstName": "Bird",
+      "lastName": "Navarro",
+      "email": "toxafewyn@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPass": "Pa$$w0rd!",
+      "id": 52
+    },
+    {
+      "firstName": "Bird adam",
+      "lastName": "Navarro",
+      "email": "toxafewyn@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPass": "Pa$$w0rd!",
+      "id": 53
+    },
+    {
+      "firstName": "Acton",
+      "lastName": "Gilbert",
+      "email": "bybaz@mailinator.com",
+      "password": "Princy@123",
+      "confirmPass": "Pa$$w0rd!",
+      "id": 54
+    }
+  ]
+}
