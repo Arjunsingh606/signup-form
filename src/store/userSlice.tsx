@@ -15,13 +15,14 @@ interface UserState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | undefined;
 }
-interface LoginPayload {
-  email?: string;
-  password?: string;
-}
+
 interface User {
   email?: string;
   password?: string;
+}
+interface resetPassPayload {
+  userId: string;
+  newPassword: string;
 }
 
 const initialState: UserState = {
@@ -29,24 +30,22 @@ const initialState: UserState = {
   status: "idle",
   error: "",
 };
-interface ResetPasswordPayload {
-  userId: string;
-  newPassword: string;
-}
 
-// for login functionality
+
+
+// fetching data for login functionality
 export const loginUser = createAsyncThunk('user/loginUser', async () => {
     const response = await fetch('http://localhost:3001/user');
     const users: User[] = await response.json();
     return users;
 });
 
-
 // post user data at api
 export const userPostData = createAsyncThunk("userdata", async (requestData: UserForm) => {
   try {
     const response = await fetch("http://localhost:3001/user", {
       method: "POST",
+    
       headers: {
         "Content-Type": "application/json",
       },
@@ -59,7 +58,8 @@ export const userPostData = createAsyncThunk("userdata", async (requestData: Use
   }
 });
 
-export const resetPassword = createAsyncThunk('user/resetPassword', async ({ userId, newPassword }: ResetPasswordPayload) => {
+ // update api (reset password)
+export const resetPassword = createAsyncThunk('user/resetPassword', async ({ userId, newPassword }: resetPassPayload) => {
   try {
     const response = await fetch(`http://localhost:3001/user/${userId}`, {
       method: 'PATCH',
@@ -68,9 +68,7 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async ({ use
       },
       body: JSON.stringify({ password: newPassword }),
     });
-
     return await response.json();
-   
   } catch (error) {
    console.log(error, "error")
   }
@@ -95,27 +93,25 @@ export const userSlice = createSlice({
     });
     builder.addCase(loginUser.pending, (state) => {
         state.status = 'loading';
-      })
+    })
     builder.addCase(loginUser.fulfilled, (state, action: PayloadAction<User[]>) => {
         state.status = 'succeeded';
         state.data = action.payload;
-      })
+    })
     builder.addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
         state.status = 'failed';
-      });
-      builder.addCase(resetPassword.pending, (state) => {
+    });
+    builder.addCase(resetPassword.pending, (state) => {
         state.status = 'loading';
-      });
-  
-      builder.addCase(resetPassword.fulfilled, (state, action:PayloadAction<any>) => {
+    });
+    builder.addCase(resetPassword.fulfilled, (state, action:PayloadAction<any>) => {
         state.status = 'succeeded';
         state.data = action.payload;
-      });
-  
-      builder.addCase(resetPassword.rejected, (state, action) => {
+    });
+    builder.addCase(resetPassword.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      });
+    });
   
   },
 });

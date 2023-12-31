@@ -29,9 +29,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ image }) => {
 
     try {
       await dispatch(resetPassword({ userId, newPassword }));
-      console.log("password changed successfully");
-      
-      // Optionally redirect or perform additional actions after successful password reset
+      alert("password changed successfully");
     } catch (error) {
       console.error("Password reset failed", error);
     }

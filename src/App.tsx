@@ -19,7 +19,6 @@ const App: React.FC = () => {
         <Route path="/resetPassword" element={<ResetPassword image={formBanner} />} />
         <Route path="/resetPassword" element={<ResetPassword image={formBanner} />} />
         <Route path="/home" element={<Home />} />
-
       </Routes>
     </>
   );
